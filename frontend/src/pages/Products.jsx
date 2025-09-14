@@ -38,22 +38,22 @@ export default function Products(){
   const [message, setMessage] = useState('')
 
   const load = ()=> {
-    fetch('/api/products').then(r=>r.json()).then(setList)
-    fetch('/api/suppliers').then(r=>r.json()).then(setSuppliers)
+    fetch(`${import.meta.env.VITE_API_URL}/api/products`).then(r=>r.json()).then(setList)
+    fetch(`${import.meta.env.VITE_API_URL}/api/suppliers`).then(r=>r.json()).then(setSuppliers)
   }
   useEffect(()=>load(),[])
 
   const create = async (data) => {
-    const res = await fetch('/api/products', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)})
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)})
     if(res.ok){ setMessage('Created'); load(); } else { const err = await res.json(); setMessage(err.error || 'Error') }
   }
   const update = async (id, data) => {
-    const res = await fetch('/api/products/'+id, {method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)})
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/`+id, {method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)})
     if(res.ok){ setMessage('Updated'); setEditing(null); load(); } else { const err = await res.json(); setMessage(err.error || 'Error') }
   }
   const remove = async (id) => {
     if(!confirm('Delete product?')) return;
-    const res = await fetch('/api/products/'+id, {method:'DELETE'})
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/`+id, {method:'DELETE'})
     if(res.ok){ setMessage('Deleted'); load(); } else { setMessage('Failed to delete') }
   }
 

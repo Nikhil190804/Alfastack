@@ -7,9 +7,9 @@ export default function Transactions(){
   const [form, setForm] = useState({product_id:'', transaction_type:'sale', quantity:1, supplier_id:''})
 
   const load = ()=> {
-    fetch('/api/products').then(r=>r.json()).then(setProducts)
-    fetch('/api/suppliers').then(r=>r.json()).then(setSuppliers)
-    fetch('/api/transactions').then(r=>r.json()).then(setTxs)
+    fetch(`${import.meta.env.VITE_API_URL}/api/products`).then(r=>r.json()).then(setProducts)
+    fetch(`${import.meta.env.VITE_API_URL}/api/suppliers`).then(r=>r.json()).then(setSuppliers)
+    fetch(`${import.meta.env.VITE_API_URL}/api/transactions`).then(r=>r.json()).then(setTxs)
   }
   useEffect(()=>load(),[])
 
@@ -21,7 +21,7 @@ export default function Transactions(){
       quantity: parseInt(form.quantity),
       supplier_id: form.supplier_id || null
     }
-    const res = await fetch('/api/transactions', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)})
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/transactions`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)})
     if(res.ok){ setForm({product_id:'', transaction_type:'sale', quantity:1, supplier_id:''}); load() } else {
       const err = await res.json(); alert(err.error || 'Failed')
     }

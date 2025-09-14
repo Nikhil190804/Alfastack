@@ -5,8 +5,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    proxy: {
-      '/api': 'https://alfastack.onrender.com'
-    }
+    //proxy: {
+    //  '/api': 'https://alfastack.onrender.com'
+    //}
   }
 })

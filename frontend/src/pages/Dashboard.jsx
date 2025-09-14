@@ -6,9 +6,9 @@ export default function Dashboard(){
   const [inventoryValue, setInventoryValue] = useState(0)
 
   useEffect(()=> {
-    fetch('/api/products').then(r=>r.json()).then(setProducts)
-    fetch('/api/reports/low-stock').then(r=>r.json()).then(setLowStock)
-    fetch('/api/reports/inventory-value').then(r=>r.json()).then(data=>setInventoryValue(data.total_value))
+    fetch(`${import.meta.env.VITE_API_URL}/api/products`).then(r=>r.json()).then(setProducts)
+    fetch(`${import.meta.env.VITE_API_URL}/api/reports/low-stock`).then(r=>r.json()).then(setLowStock)
+    fetch(`${import.meta.env.VITE_API_URL}/api/reports/inventory-value`).then(r=>r.json()).then(data=>setInventoryValue(data.total_value))
   },[])
 
   return (

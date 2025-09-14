@@ -4,7 +4,7 @@ export default function Suppliers(){
   const [list, setList] = useState([])
   const [form, setForm] = useState({name:'',contact:''})
   const [editing, setEditing] = useState(null)
-  const load = ()=> fetch('/api/suppliers').then(r=>r.json()).then(setList)
+  const load = ()=> fetch(`${import.meta.env.VITE_API_URL}/api/suppliers`).then(r=>r.json()).then(setList)
   useEffect(() => {
     load()
   }, [])
@@ -12,17 +12,17 @@ export default function Suppliers(){
   const save = async (e) => {
     e.preventDefault()
     if(editing){
-      await fetch('/api/suppliers/'+editing.id, {method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(form)})
+      await fetch(`${import.meta.env.VITE_API_URL}/api/suppliers/`+editing.id, {method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(form)})
       setEditing(null)
     } else {
-      await fetch('/api/suppliers', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(form)})
+      await fetch(`${import.meta.env.VITE_API_URL}/api/suppliers`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(form)})
     }
     setForm({name:'',contact:''})
     load()
   }
   const remove = async (id) => {
     if(!confirm('Delete supplier? This will disassociate products.')) return;
-    await fetch('/api/suppliers/'+id, {method:'DELETE'})
+    await fetch(`${import.meta.env.VITE_API_URL}/api/suppliers/`+id, {method:'DELETE'})
     load()
   }
   const startEdit = (s)=> { setEditing(s); setForm({name:s.name, contact:s.contact}) }
